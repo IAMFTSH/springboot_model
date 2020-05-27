@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    username: ftsh
+    password: 123
+    url: jdbc:mysql://localhost:3306/mybatisplus?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    #****************************   按实际情况作出改动
+    #linux和mac要useSSL=true  window不用吧
+    #url: jdbc:mysql://localhost:3306/mybatisplus?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: deleted  #全局逻辑删除字段值 3.3.0开始支持，详情看下面。
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+     # 全局逻辑删除: begin 3.3.0
+     # 如果公司代码比较规范，比如统一了全局都是flag为逻辑删除字段。
+      #使用此配置则不需要在实体类上添加 @TableLogic。
+      #但如果实体类上有 @TableLogic 则以实体上的为准，忽略全局。 即先查找注解再查找全局，都没有则此表没有逻辑删除。
+  mapper-locations: classpath*:/com/springboot/model/mapper/xml/*.xml             #***********Mapper.xml包路径*****************   按实际情况作出改动
+  type-aliases-package: com.springboot.model.entity      #***********实体类包路径*****************   按实际情况作出改动
+
+server:
+  port: 8888
+  servlet:
+    #tomcat虚拟前缀
+    context-path:

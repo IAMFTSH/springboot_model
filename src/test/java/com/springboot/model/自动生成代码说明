@@ -1,0 +1,38 @@
+主要修改以下几点
+
+ctrl+f定位相关关键字  比如setUrl
+
+数据库配置
+dsc.setUrl("jdbc:mysql://localhost:3306/mybatisplus?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8");
+//如果出错了useSSL=true上面的useSSL改为false
+dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+dsc.setUsername("ftsh");
+dsc.setPassword("123");
+
+
+gc.setAuthor("张三");  //作者名字
+
+strategy.setInclude("table_test","user");  // 生成哪个表
+
+自动填充策略配配置
+TableFill createTime=new TableFill("create_time", FieldFill.INSERT);  //创建时间列插入时填充
+TableFill updateTime=new TableFill("update_time", FieldFill.INSERT_UPDATE);  //更新时间列插入和更新时填充
+ArrayList<TableFill> tableFillArraysList=new ArrayList<>();
+tableFillArraysList.add(createTime);
+tableFillArraysList.add(updateTime);
+strategy.setTableFillList(tableFillArraysList);
+
+然后新建一个类MyMetaObjectHandler   实现 MetaObjectHandler  接口
+
+注意注意无论是软删除还是自动填充，都是mybatisPlus的自动生成的方法才有效，自己的sql不会生效
+
+扩展
+gc.setSwagger2(true); //实体属性 Swagger2 注解 需要数据库中有注解 如果没用Swagger就改false
+
+strategy.setEntityLombokModel(true);//是否支持Lombok
+
+strategy.setControllerMappingHyphenStyle(true); //localhost:8080/hello_id_2  不知所云  不知道会不会导致url问题
+
+strategy.setLogicDeleteFieldName("deleted"); //设置逻辑删除列   如果设置了全局就不用这个了
+
+strategy.setVersionFieldName("version");//乐观琐配置
