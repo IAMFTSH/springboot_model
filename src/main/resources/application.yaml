@@ -3,10 +3,11 @@ spring:
     username: ftsh
     password: 123
     url: jdbc:mysql://localhost:3306/mybatisplus?useSSL=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-    #****************************   按实际情况作出改动
-    #linux和mac要useSSL=true  window不用吧
+    #****************************   按实际情况作出改动   Linux和mac要useSSL=true  window不用吧
     #url: jdbc:mysql://localhost:3306/mybatisplus?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource   #使用阿里数据池，需要导包，如果不导请删掉
+
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
