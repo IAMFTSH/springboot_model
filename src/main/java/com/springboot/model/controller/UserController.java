@@ -24,13 +24,17 @@ import java.util.Map;
 @RequestMapping("/model/user")
 public class UserController {
 
-    @Autowired
     UserMapper userMapper;
 
     @GetMapping("print")
     List<User> print(){
         List<User> userList=userMapper.selectList(null);
         return userList;
+    }
+
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 }
 

@@ -40,7 +40,7 @@ public class Wrapper {
     void test2() {
         // 查询x，A<=X<=B
         QueryWrapper<User> wrapper=new QueryWrapper();
-        wrapper.between("age",5,14);   //name=ls
+        wrapper.between("age",5,14);
         List<User> userList=userMapper.selectList(wrapper);
         userList.forEach(System.out::println);
     }

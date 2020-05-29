@@ -26,13 +26,14 @@ import java.util.ArrayList;
 public class SwaggerConfig {
     @Bean
     public Docket docket(Environment environment){
-        Profiles profiles=Profiles.of("dev","test");  //dev环境和test环境
+        //dev环境和test环境
+        Profiles profiles=Profiles.of("dev","test");
         //如果配置了相应的application.yaml环境
         //1.application.yaml中加入
 /*        spring:
             profiles:
                 active: dev
-          这样会使用application-dev.yaml的配置比如dev端口设置为8888   application-pro.yaml 端口设置为   9999   上面值为dev的话，启动端口是8888
+          这样会使用application-dev.yaml的配置        shiroFilterFactoryBean.setUnauthorizedUrl("noAuth");比如dev端口设置为8888   application-pro.yaml 端口设置为   9999   上面值为dev的话，启动端口是8888
           2.
         建立新的配置文档    application-dev.yaml
         建立新的配置文档    application-pro.yaml

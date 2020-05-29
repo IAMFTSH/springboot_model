@@ -29,10 +29,11 @@ import lombok.experimental.Accessors;
 public class User implements Serializable {
 
     private static final long serialVersionUID=1L;
-
-    @ApiModelProperty(value = "主键ID")
-    @TableId(value = "id", type = IdType.AUTO)   /*需要设置数据库的Id自增，  但是数据库很迷，明明是日志显示是数据库id自增了但不是从最大主键开始自增，*/
+    /*需要设置数据库的Id自增，  但是数据库很迷，明明是日志显示是数据库id自增了但不是从最大主键开始自增，*/
     //INSERT INTO user ( name, age, email, create_time, update_time ) VALUES ( ?, ?, ?, ?, ? ) 日志内容  没有Id
+    @ApiModelProperty(value = "主键ID")
+    @TableId(value = "id", type = IdType.AUTO)
+
     private Long id;
 
     @ApiModelProperty(value = "姓名")

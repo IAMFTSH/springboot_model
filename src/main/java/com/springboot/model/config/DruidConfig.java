@@ -32,7 +32,7 @@ public class DruidConfig {
         initParameters.put("123", "");
 
         //禁止谁谁访问
-        // initParameters.put("asdasd","100.100.100,100");
+        //initParameters.put("asdasd","100.100.100,100");
         bean.setInitParameters(initParameters);
         return bean;
     }
