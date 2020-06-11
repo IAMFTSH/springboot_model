@@ -47,4 +47,8 @@ server:
   servlet:
     #tomcat虚拟前缀
     context-path:
-
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

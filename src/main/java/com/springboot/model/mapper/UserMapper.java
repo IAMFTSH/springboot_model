@@ -14,5 +14,9 @@ import java.util.List;
  * @since 2020-05-27
  */
 public interface UserMapper extends BaseMapper<User> {
+    /**
+     * 查询全部用户信息
+     * @return
+     */
     List<User> mySelectUserList();
 }

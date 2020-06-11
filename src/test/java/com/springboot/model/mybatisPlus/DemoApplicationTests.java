@@ -1,6 +1,7 @@
 package com.springboot.model.mybatisPlus;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageHelper;
 import com.springboot.model.entity.User;
 import com.springboot.model.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
@@ -52,7 +53,7 @@ class DemoApplicationTests {
         User user=userMapper.selectById(1L);
         System.out.println(user);
         user.setName("ggggg");
-        System.out.println(userMapper.updateById(user));;
+        System.out.println(userMapper.updateById(user));
         user=userMapper.selectById(1L);
         System.out.println(user);
     }
@@ -116,13 +117,31 @@ class DemoApplicationTests {
 
     @Test
     public void mySql(){
+        PageHelper.startPage(1, 5);
         System.out.println("自定义sql"+userMapper.mySelectUserList());
 
     }
+
     @Test
     @Transactional   //除查询或单条语句外，都要有事务管理注释   作用是，如果两条语句，其中之一出错，那么就会触发回滚。
     public void aa(){
         System.out.println("spring事务管理"+userMapper.deleteById(6));
         System.out.println(1/0);    // 出错回滚 删除
+    }
+
+    /**
+     * pageHelper的分页查询测试
+     */
+    @Test
+    public void pageHelper(){
+        //第2页，每页大小5
+        com.github.pagehelper.Page<Object> page=PageHelper.startPage(2, 5);
+        System.out.println("自定义sql"+userMapper.mySelectUserList());
+        System.out.println("--------------------------------------------------------------------");
+        System.out.println("当前页数"+page.getPageNum());
+        System.out.println("当前页数第一条"+page.getStartRow());
+        System.out.println("总数据数"+page.getTotal());
+        System.out.println("页数"+page.getPages());
+        System.out.println("页到小"+page.getPageSize());
     }
 }
