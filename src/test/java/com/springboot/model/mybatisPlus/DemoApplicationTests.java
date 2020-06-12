@@ -100,7 +100,6 @@ class DemoApplicationTests {
         userPage.getRecords().forEach(System.out::println);
         System.out.println("返回总数据数"+ userPage.getTotal());
         System.out.println("是否还有下一页"+ userPage.hasNext());
-
         //问题 如何在分页操作中添加条件查询
     }
 

@@ -1,11 +1,11 @@
 package com.springboot.model.controller;
 
 
-import com.springboot.model.entity.User;
 import com.springboot.model.entity.UserSecurity;
 import com.springboot.model.mapper.UserSecurityMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Random;
 
@@ -29,10 +27,10 @@ import java.util.Random;
 @Controller
 public class UserSecurityController {
     UserSecurityMapper userSecurityMapper;
-    @RequestMapping(value = {"/", "/index"})
+    @RequestMapping(value = {"/user/", "/user/index"})
     public String toIndex(Model model) {
         model.addAttribute("msg", "hello");
-        return "index";
+        return "user/index";
     }
 
     @RequestMapping("/user/add")
@@ -45,16 +43,34 @@ public class UserSecurityController {
         return "user/update";
     }
 
-    @RequestMapping("/toLogin")
+    @RequestMapping(value = {"/toLogin", "/login","/"})
     public String toLogin() {
-        return "/login";
+        return "login";
     }
     @RequestMapping("/noAuth")
     public String noAuth() {
-        return "/noAuth";
+        return "noAuth";
     }
 
+    @RequestMapping("/logout")
+    public String login() {
+        System.out.printf("注销了");
+        return "login";
+    }
+    @RequestMapping("/user/annotation")
+    @RequiresPermissions({"VIP3","VIP2"})
+    public String annotation() {
+        return "user/annotation";
+    }
 
+    /**
+     * 登陆，随机盐，这里可以考虑丢给service层
+     * @param username
+     * @param password
+     * @param remember
+     * @param model
+     * @return
+     */
     @PostMapping("/login")
     public String login(String username, String password, String remember,Model model) {
         Subject subject = SecurityUtils.getSubject();
@@ -65,7 +81,7 @@ public class UserSecurityController {
 
         try {
             subject.login(token);
-            return "index";
+            return "user/index";
         } catch (UnknownAccountException uae) {
             System.out.println("返回用户不存在");
         } catch (IncorrectCredentialsException ice) {

@@ -1,8 +1,10 @@
 package com.springboot.model.config;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +33,32 @@ public class ShiroConfig{
         //加密次数
         credentialsMatcher.setHashIterations(1);
         // 存储散列后的密码是否为16进制
-       // credentialsMatcher.setStoredCredentialsHexEncoded(false);
+      /*  credentialsMatcher.setStoredCredentialsHexEncoded(false);*/
         return credentialsMatcher;
     }
+
+    /**
+     * 开启shiro注解支持第一步
+     * @param securityManager
+     * @return
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
+        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor=new AuthorizationAttributeSourceAdvisor();
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        return authorizationAttributeSourceAdvisor;
+    }
+    /**
+     * 开启shiro注解支持第二步
+     * @return
+     */
+    @Bean
+    public DefaultAdvisorAutoProxyCreator getDefaultAdvisorAutoProxyCreator(){
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator=new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
+    //开启shiro注解支持第三步  配置全局异常处理器
 
     @Bean
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("getDefaultWebSecurityManager") DefaultWebSecurityManager securityManager){
@@ -52,9 +77,12 @@ public class ShiroConfig{
         map.put("/user/update","perms[user:VIP2]");
         map.put("/user/*","authc");
         map.put("/user/add","perms[user:VIP1]");
+        //logout如果不需要其他操作，可以不写接口
+        map.put("/logout","logout");
         //必须是user和add才能访问
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
-        shiroFilterFactoryBean.setLoginUrl("/toLogin");
+        //这里是页面不是接口
+        shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/noAuth");
         return shiroFilterFactoryBean;
     }
