@@ -46,7 +46,8 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .groupName("分组A")
-                .enable(flag)   //是否启用Swagger  默认启用
+                //是否启用Swagger  默认启用
+                .enable(flag)
                 .select()
                 //basePackage需要扫描的包，默认还会会扫描错误页面的controller和容器内的Controller
                 //any全部，   没实验
@@ -61,13 +62,16 @@ public class SwaggerConfig {
 
     @Bean
     public Docket docket2(Environment environment){
-        Profiles profiles=Profiles.of("dev","test");  //dev环境和test环境
-        boolean flag=true;  //如果当前环境符合上面两个值，flag=true
+        //dev环境和test环境
+        Profiles profiles=Profiles.of("dev","test");
+        //如果当前环境符合上面两个值，flag=true
+        boolean flag=true;
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .groupName("分组B")
-                .enable(flag)   //是否启用Swagger  默认启用
+                //是否启用Swagger  默认启用
+                .enable(flag)
                 .select()
                 //basePackage需要扫描的包，默认还会会扫描错误页面的controller和容器内的Controller
                 //any全部，   没实验
@@ -79,16 +83,18 @@ public class SwaggerConfig {
 /*                .paths(PathSelectors.ant("/user/**"))*/
                 .build();
     }
-
     @Bean
     public Docket docket3(Environment environment){
-        Profiles profiles=Profiles.of("dev","test");  //dev环境和test环境
-        boolean flag=true;  //如果当前环境符合上面两个值，flag=true
+        //dev环境和test环境
+        Profiles profiles=Profiles.of("dev","test");
+        //如果当前环境符合上面两个值，flag=true
+        boolean flag=true;
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .groupName("分组C")
-                .enable(flag)   //是否启用Swagger  默认启用
+                //是否启用Swagger  默认启用
+                .enable(flag)
                 .select()
                 //basePackage需要扫描的包，默认还会会扫描错误页面的controller和容器内的Controller
                 //any全部，   没实验

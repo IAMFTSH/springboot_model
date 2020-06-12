@@ -46,7 +46,7 @@ public class UserRealm extends AuthorizingRealm {
         UsernamePasswordToken token=(UsernamePasswordToken) authenticationToken;
         //根据用户名查询数据库中对应的记录
         QueryWrapper<UserSecurity> wrapper=new QueryWrapper();
-        wrapper.eq("username","321");
+        wrapper.eq("username",token.getUsername());
         UserSecurity userSecurity=userSecurityMapper.selectOne(wrapper);
         System.out.println("密码："+token.getPassword());
         //当前realm对象的name
