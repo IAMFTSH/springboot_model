@@ -5,7 +5,9 @@ import com.springboot.model.entity.UserSecurity;
 import com.springboot.model.mapper.UserSecurityMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Random;
+
+import static org.apache.shiro.authz.annotation.Logical.OR;
 
 /**
  * <p>
@@ -57,8 +61,16 @@ public class UserSecurityController {
         System.out.printf("注销了");
         return "login";
     }
+
+    /**
+     * 注释测试
+     * @return
+     */
     @RequestMapping("/user/annotation")
-    @RequiresPermissions({"VIP3","VIP2"})
+    @RequiresPermissions(value = {"VIP1","VIP2"},logical=OR)
+    //@RequiresPermissions("VIP1")  默认是AND
+    //@RequiresRoles({"teacher"})   角色和权限都要满足才可以
+
     public String annotation() {
         return "user/annotation";
     }
@@ -78,7 +90,6 @@ public class UserSecurityController {
         if(remember == "1") {
             token.setRememberMe(true);
         }
-
         try {
             subject.login(token);
             return "user/index";
@@ -107,7 +118,7 @@ public class UserSecurityController {
         userSecurity.setCredentialsSalt(salt);
         SimpleHash hash=new SimpleHash("MD5",password,salt,1);
         userSecurity.setPassword(hash.toString());
-        userSecurity.setAuthority("VIP1");
+        userSecurity.setAuthority("VIP2");
         userSecurityMapper.myInsertUserSecurity(userSecurity);
         System.out.println("注册"+userSecurity);
         return "login";

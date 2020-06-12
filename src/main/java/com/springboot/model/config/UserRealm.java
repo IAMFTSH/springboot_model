@@ -33,9 +33,9 @@ public class UserRealm extends AuthorizingRealm {
         UserSecurity userSecurity=(UserSecurity)subject.getPrincipal();
 
         info.addStringPermission(userSecurity.getAuthority());
-        System.out.println("授权");
-        //return info;
-        return null;
+        //info的Permission是set属性（set值不会重复），所以如果是多个权限，可以使用new一个set  然后赋值
+        System.out.println("授权"+info.getStringPermissions());
+        return info;
     }
 
     @Override

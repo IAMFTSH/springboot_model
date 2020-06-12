@@ -38,6 +38,11 @@ public class ShiroConfig{
     }
 
     /**
+     * 开启Shiro注解(如@RequiresRoles,@RequiresPermissions),
+     * 需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator和AuthorizationAttributeSourceAdvisor)
+     */
+    /**
      * 开启shiro注解支持第一步
      * @param securityManager
      * @return
@@ -70,13 +75,14 @@ public class ShiroConfig{
         * authc：必须认证才能访问
         * user：必须拥有 记住我功能才能访问
         * perms：必须拥有某个资源的权限才能用
-        * role：拥有某个角色的权限才能用
+        * role：拥有某个角色才能用
         * */
         //添加shiro过滤器
         Map<String,String> map=new LinkedHashMap<String,String>();
-        map.put("/user/update","perms[user:VIP2]");
+        map.put("/user/update","perms[VIP2]");
+        map.put("/user/add","perms[VIP1]");
+        //这个要放最后
         map.put("/user/*","authc");
-        map.put("/user/add","perms[user:VIP1]");
         //logout如果不需要其他操作，可以不写接口
         map.put("/logout","logout");
         //必须是user和add才能访问
