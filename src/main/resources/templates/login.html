@@ -8,9 +8,15 @@
 <form action="/login" method="post">
     用户名<input name="username" type="text">
     密码：<input name="password" type="password">
+    <p><input type="radio" name="loginType" value="UserRealm" checked/>普通用户
+        <input type="radio" name="loginType" value="UserRealm2"/>管理员</p>
+
     记住我：<input name="remember" type="password">
+
     <input type="submit">
 </form>
+<hr>
+注册
 <hr>
 <form action="/register" method="post">
     用户名<input name="username" type="text">

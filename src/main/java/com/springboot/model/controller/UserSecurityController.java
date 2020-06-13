@@ -1,6 +1,7 @@
 package com.springboot.model.controller;
 
 
+import com.springboot.model.config.shiro.MyToken;
 import com.springboot.model.entity.UserSecurity;
 import com.springboot.model.mapper.UserSecurityMapper;
 import net.sf.ehcache.CacheManager;
@@ -95,9 +96,9 @@ public class UserSecurityController {
      * @return
      */
     @PostMapping("/login")
-    public String login(String username, String password, String remember,Model model) {
+    public String login(String username, String password, String remember,String loginType,Model model) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        MyToken token = new MyToken(username, password,loginType);
         if(remember.equals("1") ) {
             token.setRememberMe(true);
         }

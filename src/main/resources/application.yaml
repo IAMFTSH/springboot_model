@@ -43,7 +43,7 @@ mybatis-plus:
   mapper-locations: classpath*:/com/springboot/model/mapper/xml/*.xml             #***********Mapper.xml包路径*****************   按实际情况作出改动
   type-aliases-package: com.springboot.model.entity      #***********实体类包路径*****************   按实际情况作出改动
 server:
-  port: 8888
+  port: 9999
   servlet:
     #tomcat虚拟前缀
     context-path:
