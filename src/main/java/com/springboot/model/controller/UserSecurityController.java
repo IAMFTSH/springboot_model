@@ -3,11 +3,10 @@ package com.springboot.model.controller;
 
 import com.springboot.model.entity.UserSecurity;
 import com.springboot.model.mapper.UserSecurityMapper;
+import net.sf.ehcache.CacheManager;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Random;
 
 import static org.apache.shiro.authz.annotation.Logical.OR;
+import static org.apache.shiro.authz.annotation.Logical.values;
 
 /**
  * <p>
@@ -31,10 +31,10 @@ import static org.apache.shiro.authz.annotation.Logical.OR;
 @Controller
 public class UserSecurityController {
     UserSecurityMapper userSecurityMapper;
-    @RequestMapping(value = {"/user/", "/user/index"})
+    @RequestMapping(value = {"/user", "/user/index"})
     public String toIndex(Model model) {
         model.addAttribute("msg", "hello");
-        return "user/index";
+        return "/user/index";
     }
 
     @RequestMapping("/user/add")
@@ -59,9 +59,20 @@ public class UserSecurityController {
     @RequestMapping("/logout")
     public String login() {
         System.out.printf("注销了");
-        return "login";
+        return "/login";
+    }
+    @RequestMapping("/user/remember")
+    public String remember() {
+        return "/user/remember";
     }
 
+    @RequestMapping("/user/removeCache")
+    public String removeCache() {
+        CacheManager cacheManager = CacheManager.getCacheManager("shiro");
+        System.out.println("缓存清理");
+        cacheManager.removeAllCaches();
+        return "/user/index";
+    }
     /**
      * 注释测试
      * @return
@@ -87,12 +98,12 @@ public class UserSecurityController {
     public String login(String username, String password, String remember,Model model) {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        if(remember == "1") {
+        if(remember.equals("1") ) {
             token.setRememberMe(true);
         }
         try {
             subject.login(token);
-            return "user/index";
+            return "/user/index";
         } catch (UnknownAccountException uae) {
             System.out.println("返回用户不存在");
         } catch (IncorrectCredentialsException ice) {
@@ -121,7 +132,7 @@ public class UserSecurityController {
         userSecurity.setAuthority("VIP2");
         userSecurityMapper.myInsertUserSecurity(userSecurity);
         System.out.println("注册"+userSecurity);
-        return "login";
+        return "/login";
     }
 
     @Autowired
