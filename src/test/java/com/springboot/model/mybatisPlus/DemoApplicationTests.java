@@ -13,7 +13,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * mybatisPlus普通测试
+ * @author 邝明山
+ */
 @SpringBootTest
 class DemoApplicationTests {
     /*这里冒红色 可以正常运行 原因不清楚*/
@@ -21,7 +24,7 @@ class DemoApplicationTests {
     private UserMapper userMapper;
     @Test
     void contextLoads() {
-        //wrapper是条件构造器
+        //wrapper是条件构造器  先忽略
         List<User> userList=userMapper.selectList(null);
         System.out.println(userList);
         System.out.println();
@@ -119,11 +122,11 @@ class DemoApplicationTests {
     public void mySql(){
         PageHelper.startPage(1, 5);
         System.out.println("自定义sql"+userMapper.mySelectUserList());
-
     }
 
     @Test
-    @Transactional   //除查询或单条语句外，都要有事务管理注释   作用是，如果两条语句，其中之一出错，那么就会触发回滚。
+    //除查询或单条语句外，都要有事务管理注释   作用是，如果两条语句，其中之一出错，那么就会触发回滚。
+    @Transactional
     public void aa(){
         System.out.println("spring事务管理"+userMapper.deleteById(6));
         System.out.println(1/0);    // 出错回滚 删除

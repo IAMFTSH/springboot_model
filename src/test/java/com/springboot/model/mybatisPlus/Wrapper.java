@@ -9,7 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-
+/**
+ *
+ * 条件查询测试（先看普通测试）
+ * @author 邝明山
+ */
 @SpringBootTest
 public class Wrapper {
     @Autowired

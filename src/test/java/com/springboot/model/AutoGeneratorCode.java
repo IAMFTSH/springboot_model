@@ -13,6 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 
+/**
+ * @author 邝明山
+ */
 @SpringBootTest
 public class AutoGeneratorCode {
     @Test
